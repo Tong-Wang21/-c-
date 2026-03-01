@@ -1,0 +1,211 @@
+#include<stdio.h>
+#include<string.h> 
+#include<windows.h>
+struct Contact
+{
+    int id;
+	char name[20];
+	char tel[12];
+	char type[10];
+	char email[30];	
+};
+int main()
+{
+	struct Contact addbook[15];
+	int num_1,count=0;
+	printf("******************************************\n");//展示首页页面 
+	printf("************通信录管理系统****************\n");
+	printf("                                          \n");
+	printf("              [1]查看                     \n");
+	printf("              [2]新增联系人               \n");
+	printf("              [3]拨号                     \n");
+	printf("              [4]修改联系人               \n");
+	printf("              [5]删除联系人               \n");
+	printf("                                          \n");
+	printf("******************************************\n");
+	start:printf("请输入对应数字以启用相应功能："); 
+	scanf("%d",&num_1);
+	if(num_1!=1 && num_1!=2 && num_1!=3 && num_1!=4 && num_1!=5)//检验输入数字是否合规 
+	printf("输入错误！\n");
+	if(num_1==1)//启用【1】功能 
+	{
+		printf("A.办公类 B.个人类 C.商务类\n");
+		char cate_1;
+		int i,j=0;
+		scanf(" %c",&cate_1);
+		if(cate_1!='A' && cate_1!='B' && cate_1!='C')//检验输入字母是否合规 
+		{
+		printf("输入错误！\n");
+        return 1;
+		}		
+		if(cate_1=='A')
+		{
+			
+			for(i=0;i<count;i++)
+			{
+				if(addbook[i].type[0] ==cate_1)
+				{
+				  printf("%d,%s,%s,%s,%s\n",addbook[i].id ,addbook[i].name ,addbook[i].tel ,addbook[i].type ,addbook[i].email );
+				  j++;
+			    }
+			}
+			
+		}
+		if(cate_1=='B')
+		{
+			
+			for(i=0;i<count;i++)
+			{
+				if(addbook[i].type[0] ==cate_1)
+				{
+				  printf("%d,%s,%s,%s,%s\n",addbook[i].id ,addbook[i].name ,addbook[i].tel ,addbook[i].type ,addbook[i].email );
+				  j++;
+			    }
+			}
+			
+		}
+		if(cate_1=='C')
+		{
+			
+			for(i=0;i<count;i++)
+			{
+				if(addbook[i].type[0] ==cate_1)
+				{
+				  printf("%d,%s,%s,%s,%s\n",addbook[i].id ,addbook[i].name ,addbook[i].tel ,addbook[i].type ,addbook[i].email );
+				  j++;
+			    }
+			}
+		}
+		if(j==0)//判断是否存在此类联系人 
+		printf("未找到联系人!\n");
+		goto start;
+	}
+	if(num_1==2)//启用【2】功能 
+	{
+		if(count>=15)//判断联系人是否已满 
+		{
+			printf("储存空间已满！");
+			return 1; 
+		}
+		else
+		{
+	    char temp_1[20],temp_2[20],temp_3[20],temp_4[30];
+	    int j;
+		pri:printf("录入联系人信息：(姓名 电话 类型 邮箱)");
+		scanf("%s %s %s %s", temp_1,temp_2,temp_3,temp_4);
+		for(j=0;j<count;j++)
+		{
+			if(strcmp(temp_1,addbook[j].name )==0 || strcmp(temp_2,addbook[j].tel )==0 )//检验是否输入重复姓名或电话的联系人 
+			{
+				printf("数据录入重复！");
+				goto pri;
+			}
+		}
+        strcpy(addbook[count].name,temp_1);//判断无误后将数据存入通讯录中 
+        strcpy(addbook[count].tel,temp_2);
+        strcpy(addbook[count].type,temp_3);
+        strcpy(addbook[count].email,temp_4);
+		addbook[count].id =count+1;
+		count++;
+		printf("成功录入！\n");
+	   }
+	   goto start;
+	}
+	if(num_1==3)//启用【3】功能 
+	
+	{
+		int i;
+		char temp_name1[20];
+		for(i=0;i<count;i++)//展示通讯录已有的人员名单 
+		{
+			printf("%d,%s,%s,%s,%s\n",addbook[i].id ,addbook[i].name ,addbook[i].tel ,addbook[i].type ,addbook[i].email );
+		}
+		pri2:printf("请输入要查找的联系人姓名：");
+		scanf("%s",temp_name1);
+		for(i=0;i<count;i++)
+		{
+			if(strcmp(temp_name1,addbook[i].name)==0)//查找对应的人员 
+			{
+				char *tel=addbook[i].tel ;//逐个输出电话号码 
+				int len=strlen(tel),j;
+				for(j=0;j<len;j++) 
+				{
+			    printf("%c",tel[j]);
+				fflush(stdout);
+				Sleep(500);
+			    }
+			    printf("完成拨号！\n");
+			}
+			else//检验输入的联系人是否存在 
+			{
+		        printf("联系人不存在！\n");
+		        goto pri2;
+		    }
+		}
+	}
+	if(num_1==4)//启用【4】功能 
+	{
+		int i,j; 
+		char temp_name[20],temp_nam[20],temp_tel[12],temp_type[20],temp_email[30];//定义临时变量 以便后续的检验 
+			for(i=0;i<count;i++)
+		{
+			printf("%d,%s,%s,%s,%s\n",addbook[i].id ,addbook[i].name ,addbook[i].tel ,addbook[i].type ,addbook[i].email );
+		}
+		printf("请选择要修改的联系人姓名\n");
+		scanf("%s",temp_name);
+		pri3:printf("请填写修改后的信息:(姓名 电话 类型 邮箱)\n");
+		scanf("%s %s %s %s",temp_nam,temp_tel,temp_type,temp_email);
+		for(i=0;i<count;i++)
+		{
+			if(strcmp(temp_nam,addbook[i].name)==0 || strcmp(temp_tel,addbook[i].tel )==0)//检验名字与号码是否重复 
+			{
+		    	printf("输入重复！\n");
+		    	goto pri3;
+		    }
+		  
+		    else
+		   {
+		    	break;
+		   }
+    	}
+    	for(i=0;i<count;i++)//查找需要修改的人员的位置 以便后续的插入数据 
+    	{
+    		if(strcmp(addbook[i].name ,temp_name)==0)
+    		{
+    			j=addbook[i].id -1;
+    			break;
+			}
+		}
+		strcpy(addbook[j].name,temp_nam);//将修改后的数据插入原有数据的位置 
+        strcpy(addbook[j].tel,temp_tel);
+        strcpy(addbook[j].type,temp_type);
+        strcpy(addbook[j].email,temp_email);
+        printf("修改成功！");
+        goto start;
+	}
+	if(num_1==5)//启用【5】功能 
+	{
+		int i,j;
+	    char del_name[20];
+		printf("请输入要删除联系人的姓名:");
+		scanf("%s",del_name);
+		for(i=0;i<count;i++)
+		{
+			if(strcmp(addbook[i].name ,del_name)==0)//确定需要删除的联系人的位置 以便后续的数据插入 
+			{
+				j=i;
+				break;
+			}
+		}
+		for(i=j;i<count-1;i++)
+		{
+			strcpy(addbook[i].name ,addbook[i+1].name );//采用后一项覆盖前一项的方法来达到删除的效果 
+			strcpy(addbook[i].tel ,addbook[i+1].tel );
+			strcpy(addbook[i].type ,addbook[i+1].type );
+			strcpy(addbook[i].email ,addbook[i+1].email );
+		}
+		count--;
+		goto start;
+	}
+	return 0;
+}
